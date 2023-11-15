@@ -3,9 +3,9 @@
 //
 #include <malloc.h>
 
-#include "../libraries/handle_errors.h"
-#include "../libraries/image.h"
-#include "../libraries/utils.h"
+#include "handle_errors.h"
+#include "image.h"
+#include "utils.h"
 
 struct image get_image(uint32_t width, uint32_t height) {
     struct image img;

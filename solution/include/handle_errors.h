@@ -1,7 +1,7 @@
 #ifndef IMAGE_TRANSFORMER_HANDLE_ERRORS_H
 #define IMAGE_TRANSFORMER_HANDLE_ERRORS_H
 
-#include "bmp_io.h"
+#include "bmp_io_formats.h"
 
 void handle_read_errors(enum read_status r_status);
 

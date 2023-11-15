@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../libraries/bmp_io.h"
-#include "../libraries/exit_codes.h"
-#include "../libraries/handle_errors.h"
-#include "../libraries/transform.h"
+#include "bmp_io_formats.h"
+#include "exit_codes.h"
+#include "handle_errors.h"
+#include "transform.h"
 
 #define ARGUMENTS_NUMBER 4
 #define SOURCE_IMAGE_ARGUMENT_NUMBER 1

@@ -3,8 +3,8 @@
 //
 #include <stdlib.h>
 
-#include "../libraries/bmp_io.h"
-#include "../libraries/exit_codes.h"
+#include "bmp_io_formats.h"
+#include "exit_codes.h"
 
 void handle_read_errors(enum read_status r_status) {
     printf("Read error: ");

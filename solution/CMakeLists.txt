@@ -10,15 +10,14 @@ file(GLOB_RECURSE sources CONFIGURE_DEPENDS
 )
 
 add_executable(image-transformer ${sources}
-        libraries/image.h
-        libraries/bmp_io.h
         src/transform.c
-        libraries/transform.h
+        include/bmp_io_formats.h
+        src/transform.c
+        include/transform.h
         src/handle_errors.c
-        libraries/handle_errors.h
-        libraries/utils.h
-        libraries/exit_codes.h
-        src/bmp_io.c
+        include/handle_errors.h
+        include/utils.h
+        src/bmp_io_formats.c
         src/handle_errors.c
         src/transform.c
         src/utils.c

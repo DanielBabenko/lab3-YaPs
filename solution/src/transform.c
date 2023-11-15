@@ -4,8 +4,8 @@
 
 #include <malloc.h>
 
-#include "../libraries/image.h"
-#include "../libraries/utils.h"
+#include "image.h"
+#include "utils.h"
 
 struct image rotate90(struct image const source) {
     struct image destination = get_image(source.height, source.width);

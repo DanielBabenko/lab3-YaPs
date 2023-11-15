@@ -1,8 +1,8 @@
 #include <stdio.h>
 
-#include "../libraries/bmp_io.h"
-#include "../libraries/image.h"
-#include "../libraries/utils.h"
+#include "bmp_io_formats.h"
+#include "image.h"
+#include "utils.h"
 
 #define BMP_TYPE 19778
 #define BF_RESERVED 0
@@ -17,28 +17,30 @@
 #define BITS_IN_BYTE 8
 
 struct __attribute__((packed)) bmp_header {
-    uint16_t bfType;
-    uint32_t bfileSize;
-    uint32_t bfReserved;
-    uint32_t bOffBits;
-    uint32_t biSize;
-    uint32_t biWidth;
-    uint32_t biHeight;
-    uint16_t biPlanes;
-    uint16_t biBitCount;
-    uint32_t biCompression;
-    uint32_t biSizeImage;
-    uint32_t biXPelsPerMeter;
-    uint32_t biYPelsPerMeter;
-    uint32_t biClrUsed;
-    uint32_t biClrImportant;
+uint16_t bfType;
+uint32_t  bfileSize;
+uint32_t bfReserved;
+uint32_t bOffBits;
+uint32_t biSize;
+uint32_t biWidth;
+uint32_t  biHeight;
+uint16_t  biPlanes;
+uint16_t biBitCount;
+uint32_t biCompression;
+uint32_t biSizeImage;
+uint32_t biXPelsPerMeter;
+uint32_t biYPelsPerMeter;
+uint32_t biClrUsed;
+uint32_t  biClrImportant;
 };
 
-
-static uint32_t get_padding(uint32_t width) {
-    uint32_t row_size = width * sizeof(struct pixel);           //in bytes
-    uint32_t padding = (4 - row_size % 4) % 4;                  //in bytes
-    return padding;
+static uint32_t get_paddings(uint32_t width){
+    uint32_t row = width * sizeof(struct pixel);
+    uint32_t paddings = 4 - (row % 4);
+    if (paddings == 4){
+        paddings = 0;
+    }
+    return paddings;
 }
 
 /*  deserializer   */
@@ -69,7 +71,7 @@ enum read_status from_bmp(FILE *in, struct image *img) {
             return READ_INVALID_BITS;
         }
         //skip padding
-        fseek(in, (long) get_padding(img->width), SEEK_CUR);
+        fseek(in, (long) get_paddings(img->width), SEEK_CUR);
     }
 
     return READ_OK;
@@ -81,7 +83,7 @@ struct bmp_header get_header(uint32_t width, uint32_t height) {
     header.bfType = BMP_TYPE;
 
     header.bfileSize = sizeof(struct bmp_header) +
-                       height * (width * sizeof(struct pixel) + get_padding(width));
+                       height * (width * sizeof(struct pixel) + get_paddings(width));
 
     header.bfReserved = BF_RESERVED;
     header.bOffBits = sizeof(struct bmp_header);        //54
@@ -119,7 +121,7 @@ enum write_status to_bmp(FILE *out, struct image const *img) {
         }
 
         //skip padding
-        fseek(out, (long) get_padding(img->width), SEEK_CUR);
+        fseek(out, (long) get_paddings(img->width), SEEK_CUR);
     }
 
     return WRITE_OK;
